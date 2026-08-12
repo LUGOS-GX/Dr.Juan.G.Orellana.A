@@ -1,0 +1,114 @@
+---
+import { doctor, contacto, cobertura } from '../data/site';
+import Iconos from './Iconos.astro';
+
+const indicadores = [
+  { valor: doctor.anosExperiencia, texto: 'años de experiencia' },
+  { valor: doctor.pacientes, texto: 'pacientes atendidos' },
+  { valor: '4', texto: 'ciudades de cobertura' },
+  { valor: '24 h', texto: 'de lunes a viernes' }
+];
+---
+
+<section id="inicio" class="fondo-azul relative overflow-hidden">
+  <div class="relative mx-auto flex min-h-[100svh] max-w-[1240px] flex-col px-5 pt-24 sm:px-8 sm:pt-28">
+    <div class="grid flex-1 items-end gap-8 lg:grid-cols-12 lg:items-start lg:gap-6">
+      <!-- Columna de texto -->
+      <div class="pb-2 lg:col-span-7 lg:pb-16">
+        <p class="flex items-center gap-3" data-revelar>
+          <span class="pulso" id="pulso-estado" data-estado="abierto" aria-hidden="true"></span>
+          <span class="etiqueta text-azul-100" id="texto-estado">Atención a domicilio · Zona norte de Anzoátegui</span>
+        </p>
+
+        <h1
+          class="titular mt-5 text-[clamp(2.5rem,9.5vw,5.25rem)] text-white"
+          data-revelar
+          style="--retardo:80ms"
+        >
+          Dr. Juan G.<br />Orellana A.
+        </h1>
+
+        <p
+          class="mt-5 flex flex-wrap items-center gap-x-4 gap-y-2 text-lg text-azul-100 sm:text-xl"
+          data-revelar
+          style="--retardo:160ms"
+        >
+          <span class="font-medium text-white">{doctor.especialidadSecundaria}</span>
+          <span class="h-4 w-px bg-white/25"></span>
+          <span class="font-medium text-white">{doctor.especialidad}</span>
+        </p>
+
+        <p class="dato mt-3 text-sm text-azul-100/70" data-revelar style="--retardo:200ms">
+          CM {doctor.cm} · MPPS {doctor.mpps}
+        </p>
+
+        <p
+          class="mt-6 max-w-xl text-base leading-relaxed text-white/75 sm:text-lg"
+          data-revelar
+          style="--retardo:240ms"
+        >
+          Atención médica domiciliaria y videoconsultas en toda la zona norte del estado Anzoátegui:
+          {cobertura.slice(0, 3).join(', ')} y {cobertura[3]}. Más de 30 años de experiencia y más de
+          100.000 pacientes atendidos.
+        </p>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center" data-revelar style="--retardo:320ms">
+          <a
+            href={contacto.telefonoLink}
+            class="group inline-flex items-center justify-between gap-4 rounded-full bg-white px-7 py-4 text-azul-900 transition-transform hover:-translate-y-0.5 sm:justify-start"
+            aria-label={`Llamar al ${contacto.telefonoVisible}`}
+          >
+            <span class="inline-flex items-center gap-2.5 text-base font-medium">
+              <Iconos nombre="telefono" clase="w-[18px] h-[18px]" />
+              {contacto.etiquetaLlamada}
+            </span>
+            <Iconos nombre="flecha" clase="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </a>
+          <a
+            href={contacto.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2.5 rounded-full border border-white/30 px-6 py-4 text-sm font-medium text-white transition-colors hover:border-white hover:bg-white/10"
+          >
+            <Iconos nombre="whatsapp" clase="w-[18px] h-[18px]" />
+            Escribir por WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Columna de fotografía -->
+      <div class="relative isolate lg:col-span-5 lg:mt-9" data-revelar style="--retardo:120ms">
+        <div class="pointer-events-none absolute inset-x-0 bottom-0 top-6 -z-10 bg-[radial-gradient(60%_55%_at_50%_45%,rgba(95,168,211,0.5)_0%,rgba(30,96,145,0)_70%)]"></div>
+        <img
+          src="/img/dr-juan-orellana.webp"
+          srcset="/img/dr-juan-orellana-560.webp 560w, /img/dr-juan-orellana.webp 880w"
+          sizes="(min-width: 1024px) 460px, 90vw"
+          width="880"
+          height="1204"
+          alt={`${doctor.nombre}, ${doctor.especialidadSecundaria.toLowerCase()} y ${doctor.especialidad.toLowerCase()}`}
+          fetchpriority="high"
+          decoding="async"
+          class="foto-difuminada mx-auto block h-auto max-h-[48svh] w-auto lg:max-h-[64svh]"
+        />
+      </div>
+    </div>
+
+    <!-- Franja de indicadores -->
+    <div class="mt-auto border-t border-white/15">
+      <ul class="grid grid-cols-2 sm:grid-cols-4">
+        {
+          indicadores.map((item, i) => (
+            <li
+              class={`py-4 sm:py-5 ${i > 0 ? 'sm:border-l sm:border-white/10 sm:pl-6' : ''} ${i < 2 ? 'border-b border-white/10 sm:border-b-0' : ''}`}
+              data-revelar
+              style={`--retardo:${400 + i * 70}ms`}
+            >
+              <p class="titular text-2xl text-white sm:text-3xl">{item.valor}</p>
+              <p class="etiqueta mt-1.5 text-white/50">{item.texto}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

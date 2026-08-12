@@ -1,0 +1,38 @@
+---
+import { servicios } from '../data/site';
+---
+
+<section id="servicios" class="bg-white">
+  <div class="mx-auto max-w-[1240px] px-5 py-16 sm:px-8 sm:py-20">
+    <div class="max-w-2xl">
+      <p class="etiqueta text-verde-500" data-revelar>Servicios</p>
+      <h2
+        class="titular mt-4 text-[clamp(2rem,6vw,3.5rem)] text-verde-700"
+        data-revelar
+        style="--retardo:80ms"
+      >
+        Lo que resuelvo<br />en tu casa
+      </h2>
+      <p class="mt-6 text-base leading-relaxed text-verde-800/70 sm:text-lg" data-revelar style="--retardo:140ms">
+        Una consulta a domicilio con el mismo alcance que en consultorio, sin traslados y sin listas de
+        espera.
+      </p>
+    </div>
+
+    <ul class="mt-10 grid gap-px overflow-hidden rounded-sm bg-verde-100 sm:mt-12 lg:grid-cols-3">
+      {
+        servicios.map((servicio, i) => (
+          <li
+            class="group bg-white p-8 transition-colors hover:bg-verde-100/35 sm:p-10"
+            data-revelar
+            style={`--retardo:${i * 110}ms`}
+          >
+            <span class="cruz block h-[18px] w-[22px] text-verde-500" aria-hidden="true" />
+            <h3 class="titular mt-8 text-2xl text-verde-700 sm:text-[1.75rem]">{servicio.titulo}</h3>
+            <p class="mt-4 text-[0.95rem] leading-relaxed text-verde-800/70">{servicio.detalle}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

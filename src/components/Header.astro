@@ -1,0 +1,24 @@
+---
+import { contacto, doctor } from '../data/site';
+import Iconos from './Iconos.astro';
+---
+
+<header class="absolute inset-x-0 top-0 z-50">
+  <div class="mx-auto flex max-w-[1240px] items-center justify-between px-5 py-5 sm:px-8 sm:py-6">
+    <a href="#inicio" class="group flex items-center gap-3">
+      <span class="cruz block h-[18px] w-[22px] text-azul-300"></span>
+      <span class="etiqueta text-white/70 transition-colors group-hover:text-white">
+        {doctor.nombre}
+      </span>
+    </a>
+
+    <a
+      href={contacto.telefonoLink}
+      class="group flex items-center gap-2.5 rounded-full border border-white/25 bg-white/5 px-5 py-2.5 text-sm font-medium text-white backdrop-blur-sm transition-all hover:border-white/70 hover:bg-white hover:text-azul-900"
+      aria-label={`Llamar al ${contacto.telefonoVisible}`}
+    >
+      <Iconos nombre="telefono" clase="w-4 h-4 shrink-0" />
+      <span>{contacto.etiquetaLlamada}</span>
+    </a>
+  </div>
+</header>

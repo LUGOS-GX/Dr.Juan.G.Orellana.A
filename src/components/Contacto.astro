@@ -1,0 +1,100 @@
+---
+import { contacto, cobertura, mapaEmbed } from '../data/site';
+import Iconos from './Iconos.astro';
+---
+
+<section id="contacto" class="relative bg-azul-900">
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(75%_60%_at_18%_0%,rgba(30,96,145,0.55)_0%,rgba(10,25,47,0)_65%)]"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-[1240px] px-5 py-16 sm:px-8 sm:py-20">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-14">
+      <!-- Acciones de contacto -->
+      <div class="lg:col-span-6">
+        <p class="etiqueta text-azul-300" data-revelar>Contacto</p>
+        <h2 class="titular mt-4 text-[clamp(2rem,6vw,3.5rem)] text-white" data-revelar style="--retardo:80ms">
+          ¿Necesitas una<br />consulta? ¡Llámame!
+        </h2>
+
+        <div class="mt-8 space-y-px border-y border-white/10">
+          <a
+            href={contacto.telefonoLink}
+            class="group flex items-center gap-5 py-6 transition-colors hover:text-azul-300"
+            data-revelar
+            style="--retardo:120ms"
+          >
+            <Iconos nombre="telefono" clase="w-5 h-5 shrink-0 text-azul-300" />
+            <span class="flex-1">
+              <span class="etiqueta block text-white/45">Llamada directa</span>
+              <span class="dato mt-1.5 block text-xl text-white sm:text-2xl">{contacto.telefonoVisible}</span>
+            </span>
+            <Iconos nombre="flecha" clase="w-4 h-4 text-white/40 transition-transform group-hover:translate-x-1 group-hover:text-azul-300" />
+          </a>
+
+          <a
+            href={contacto.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex items-center gap-5 border-t border-white/10 py-6 transition-colors hover:text-azul-300"
+            data-revelar
+            style="--retardo:180ms"
+          >
+            <Iconos nombre="whatsapp" clase="w-5 h-5 shrink-0 text-[#25D366]" />
+            <span class="flex-1">
+              <span class="etiqueta block text-white/45">WhatsApp</span>
+              <span class="dato mt-1.5 block text-xl text-white sm:text-2xl">{contacto.telefonoVisible}</span>
+            </span>
+            <Iconos nombre="flecha" clase="w-4 h-4 text-white/40 transition-transform group-hover:translate-x-1 group-hover:text-azul-300" />
+          </a>
+
+          <a
+            href={contacto.emailLink}
+            class="group flex items-center gap-5 border-t border-white/10 py-6 transition-colors hover:text-azul-300"
+            data-revelar
+            style="--retardo:240ms"
+          >
+            <Iconos nombre="correo" clase="w-5 h-5 shrink-0 text-azul-300" />
+            <span class="flex-1 min-w-0">
+              <span class="etiqueta block text-white/45">Correo</span>
+              <span class="dato mt-1.5 block truncate text-base text-white sm:text-lg">{contacto.email}</span>
+            </span>
+            <Iconos nombre="flecha" clase="w-4 h-4 text-white/40 transition-transform group-hover:translate-x-1 group-hover:text-azul-300" />
+          </a>
+        </div>
+
+        <p class="mt-6 text-sm leading-relaxed text-white/55" data-revelar style="--retardo:300ms">
+          Comunícate conmigo para agendar tu consulta.
+        </p>
+      </div>
+
+      <!-- Cobertura y mapa -->
+      <div class="lg:col-span-6" data-revelar style="--retardo:160ms">
+        <p class="etiqueta text-azul-300">Zona de cobertura</p>
+        <ul class="mt-5 flex flex-wrap gap-2">
+          {
+            cobertura.map((ciudad) => (
+              <li class="dato rounded-full border border-white/20 px-4 py-2 text-[13px] text-white/85">
+                {ciudad}
+              </li>
+            ))
+          }
+        </ul>
+
+        <div class="group mt-8 overflow-hidden rounded-sm border border-white/15">
+          <iframe
+            src={mapaEmbed}
+            title="Mapa de la zona de atención: Lechería, estado Anzoátegui"
+            width="100%"
+            height="420"
+            style="border:0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            class="block h-[320px] w-full grayscale-[0.35] contrast-[1.05] transition-all duration-500 group-hover:grayscale-0 sm:h-[420px]"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,28 @@
+---
+import { contacto } from '../data/site';
+import Iconos from './Iconos.astro';
+---
+
+<div
+  class="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-azul-950/90 px-4 pb-[calc(0.75rem+env(safe-area-inset-bottom))] pt-3 backdrop-blur-md lg:hidden"
+>
+  <div class="flex items-center gap-2.5">
+    <a
+      href={contacto.telefonoLink}
+      class="flex flex-1 items-center justify-center gap-2.5 rounded-full bg-white px-5 py-3.5 text-sm font-medium text-azul-900"
+    >
+      <Iconos nombre="telefono" clase="w-4 h-4" />
+      Llamar ahora
+    </a>
+    <a
+      href={contacto.whatsappLink}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex items-center justify-center gap-2 rounded-full border border-white/25 px-5 py-3.5 text-sm font-medium text-white"
+      aria-label="Escribir por WhatsApp"
+    >
+      <Iconos nombre="whatsapp" clase="w-[18px] h-[18px] text-[#25D366]" />
+      WhatsApp
+    </a>
+  </div>
+</div>

@@ -1,0 +1,90 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Servicios from '../components/Servicios.astro';
+import Contacto from '../components/Contacto.astro';
+import Footer from '../components/Footer.astro';
+import BarraLlamada from '../components/BarraLlamada.astro';
+---
+
+<Layout
+  titulo="Dr. Juan G. Orellana A. | Médico a domicilio en Lechería, Barcelona, Puerto La Cruz y Guanta"
+  descripcion="Médico epidemiólogo y médico general. Atención médica domiciliaria y videoconsultas en la zona norte de Anzoátegui. Más de 30 años de experiencia y más de 100.000 pacientes atendidos. Lunes a viernes 24 horas."
+>
+  <Header />
+  <main>
+    <Hero />
+    <Servicios />
+    <Contacto />
+  </main>
+  <Footer />
+  <BarraLlamada />
+</Layout>
+
+<script>
+  // Estado de disponibilidad en hora de Venezuela
+  const punto = document.getElementById('pulso-estado');
+  const texto = document.getElementById('texto-estado');
+
+  function estadoActual() {
+    const partes = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/Caracas',
+      weekday: 'short',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: false
+    }).formatToParts(new Date());
+
+    const obtener = (tipo: string) => partes.find((p) => p.type === tipo)?.value ?? '';
+    const dia = obtener('weekday');
+    const hora = Number(obtener('hour')) % 24;
+    const minuto = Number(obtener('minute'));
+    const reloj = `${String(hora).padStart(2, '0')}:${String(minuto).padStart(2, '0')}`;
+
+    if (dia === 'Sun') {
+      return { abierto: false, mensaje: `Domingo · Solo emergencias · ${reloj}` };
+    }
+
+    if (dia === 'Sat') {
+      const dentro = hora >= 7 && hora < 22;
+      return dentro
+        ? { abierto: true, mensaje: `Atendiendo ahora · Sábado ${reloj}` }
+        : { abierto: false, mensaje: `Fuera de horario · Emergencias por WhatsApp` };
+    }
+
+    return { abierto: true, mensaje: `Atendiendo ahora · Lunes a viernes 24 h · ${reloj}` };
+  }
+
+  function actualizar() {
+    if (!punto || !texto) return;
+    const { abierto, mensaje } = estadoActual();
+    punto.dataset.estado = abierto ? 'abierto' : 'cerrado';
+    texto.textContent = mensaje;
+  }
+
+  actualizar();
+  setInterval(actualizar, 30000);
+
+  // Revelado al hacer scroll
+  const elementos = document.querySelectorAll('[data-revelar]');
+  const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducido || !('IntersectionObserver' in window)) {
+    elementos.forEach((el) => el.classList.add('visible'));
+  } else {
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((entrada) => {
+          if (entrada.isIntersecting) {
+            entrada.target.classList.add('visible');
+            observador.unobserve(entrada.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.05 }
+    );
+
+    elementos.forEach((el) => observador.observe(el));
+  }
+</script>

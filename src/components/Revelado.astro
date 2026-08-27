@@ -1,0 +1,21 @@
+<script>
+  const elementos = document.querySelectorAll('[data-revelar]');
+  const reducido = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (reducido || !('IntersectionObserver' in window)) {
+    elementos.forEach((el) => el.classList.add('visible'));
+  } else {
+    const observador = new IntersectionObserver(
+      (entradas) => {
+        entradas.forEach((entrada) => {
+          if (entrada.isIntersecting) {
+            entrada.target.classList.add('visible');
+            observador.unobserve(entrada.target);
+          }
+        });
+      },
+      { rootMargin: '0px 0px -12% 0px', threshold: 0.05 }
+    );
+    elementos.forEach((el) => observador.observe(el));
+  }
+</script>

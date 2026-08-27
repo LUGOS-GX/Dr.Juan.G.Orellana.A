@@ -1,0 +1,156 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Header from '../../components/Header.astro';
+import Contacto from '../../components/Contacto.astro';
+import Preguntas from '../../components/Preguntas.astro';
+import Footer from '../../components/Footer.astro';
+import BarraLlamada from '../../components/BarraLlamada.astro';
+import Iconos from '../../components/Iconos.astro';
+import Revelado from '../../components/Revelado.astro';
+import { ciudades } from '../../data/ciudades';
+import { doctor, contacto, servicios } from '../../data/site';
+import { preguntas } from '../../data/faq';
+
+export function getStaticPaths() {
+  return ciudades.map((ciudad) => ({ params: { ciudad: ciudad.slug }, props: { ciudad } }));
+}
+
+const { ciudad } = Astro.props;
+const ruta = `/medico-a-domicilio/${ciudad.slug}/`;
+
+const esquemaExtra = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: preguntas.map((p) => ({
+      '@type': 'Question',
+      name: p.pregunta,
+      acceptedAnswer: { '@type': 'Answer', text: p.respuesta }
+    }))
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', Astro.site).href },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: ciudad.h1,
+        item: new URL(ruta, Astro.site).href
+      }
+    ]
+  }
+];
+---
+
+<Layout titulo={ciudad.titulo} descripcion={ciudad.descripcion} ruta={ruta} esquemaExtra={esquemaExtra}>
+  <Header />
+  <main>
+    <section class="fondo-azul relative overflow-hidden">
+      <div class="mx-auto max-w-[1240px] px-5 pt-28 pb-16 sm:px-8 sm:pt-32 sm:pb-20">
+        <nav aria-label="Ruta de navegación" class="etiqueta text-white/45">
+          <a href="/" class="transition-colors hover:text-white">Inicio</a>
+          <span class="px-2">/</span>
+          <span class="text-white/70">{ciudad.nombre}</span>
+        </nav>
+
+        <h1 class="titular mt-6 max-w-4xl text-[clamp(2.25rem,7vw,4.5rem)] text-white">
+          {ciudad.h1}
+        </h1>
+
+        <p class="dato mt-4 text-sm text-azul-100/70">
+          {doctor.especialidadSecundaria} y {doctor.especialidad} · CM {doctor.cm} · MPPS {doctor.mpps}
+        </p>
+
+        <p class="mt-6 max-w-2xl text-base leading-relaxed text-white/75 sm:text-lg">
+          {ciudad.intro}
+        </p>
+
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <a
+            href={contacto.telefonoLink}
+            class="inline-flex items-center justify-center gap-2.5 rounded-full bg-white px-7 py-4 text-base font-medium text-azul-900"
+            aria-label={`Llamar al ${contacto.telefonoVisible}`}
+          >
+            <Iconos nombre="telefono" clase="w-[18px] h-[18px]" />
+            {contacto.telefonoVisible}
+          </a>
+          <a
+            href={contacto.whatsappLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center justify-center gap-2.5 rounded-full border border-white/30 px-6 py-4 text-sm font-medium text-white transition-colors hover:border-white hover:bg-white/10"
+          >
+            <Iconos nombre="whatsapp" clase="w-[18px] h-[18px]" />
+            Escribir por WhatsApp
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white">
+      <div class="mx-auto grid max-w-[1240px] gap-12 px-5 py-16 sm:px-8 sm:py-20 lg:grid-cols-12">
+        <div class="lg:col-span-7">
+          <h2 class="titular text-[clamp(1.75rem,5vw,2.75rem)] text-verde-700">
+            La consulta en {ciudad.nombre}
+          </h2>
+          {ciudad.parrafos.map((p) => <p class="mt-5 leading-relaxed text-verde-800/75">{p}</p>)}
+
+          <h2 class="titular mt-12 text-[clamp(1.75rem,5vw,2.75rem)] text-verde-700">
+            Servicios disponibles en {ciudad.nombre}
+          </h2>
+          <ul class="mt-6 space-y-5">
+            {
+              servicios.map((s) => (
+                <li class="border-l-2 border-verde-500 pl-5">
+                  <h3 class="titular text-lg text-verde-700">{s.titulo}</h3>
+                  <p class="mt-1.5 text-[0.95rem] leading-relaxed text-verde-800/70">{s.detalle}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        <aside class="lg:col-span-5">
+          <div class="rounded-sm border border-verde-100 p-8">
+            <p class="etiqueta text-verde-500">Sectores atendidos</p>
+            <ul class="mt-4 flex flex-wrap gap-2">
+              {
+                ciudad.sectores.map((s) => (
+                  <li class="dato rounded-full border border-verde-100 px-3.5 py-1.5 text-[13px] text-verde-800/80">
+                    {s}
+                  </li>
+                ))
+              }
+            </ul>
+
+            <p class="etiqueta mt-8 text-verde-500">Otras ciudades</p>
+            <ul class="mt-4 space-y-2">
+              {
+                ciudades
+                  .filter((c) => c.slug !== ciudad.slug)
+                  .map((c) => (
+                    <li>
+                      <a
+                        href={`/medico-a-domicilio/${c.slug}/`}
+                        class="text-verde-700 underline underline-offset-4 transition-colors hover:text-verde-500"
+                      >
+                        Médico a domicilio en {c.nombre}
+                      </a>
+                    </li>
+                  ))
+              }
+            </ul>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <Preguntas />
+    <Contacto />
+  </main>
+  <Footer />
+  <BarraLlamada />
+  <Revelado />
+</Layout>

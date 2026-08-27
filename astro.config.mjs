@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  site: 'https://drjuanorellana.com',
-  vite: {
-    plugins: [tailwindcss()]
-  }
+  site: 'https://dr-juan-orellana.pages.dev',
+  trailingSlash: 'always',
+  integrations: [sitemap()],
+  vite: { plugins: [tailwindcss()] }
 });

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://dr-juan-orellana.pages.dev/sitemap-index.xml

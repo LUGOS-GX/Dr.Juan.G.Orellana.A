@@ -6,16 +6,33 @@ import Servicios from '../components/Servicios.astro';
 import Contacto from '../components/Contacto.astro';
 import Footer from '../components/Footer.astro';
 import BarraLlamada from '../components/BarraLlamada.astro';
+import Preguntas from '../components/Preguntas.astro';
+import { preguntas } from '../data/faq';
+
+const esquemaExtra = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: preguntas.map((p) => ({
+      '@type': 'Question',
+      name: p.pregunta,
+      acceptedAnswer: { '@type': 'Answer', text: p.respuesta }
+    }))
+  }
+];
 ---
 
 <Layout
-  titulo="Dr. Juan G. Orellana A. | Médico a domicilio en Lechería, Barcelona, Puerto La Cruz y Guanta"
-  descripcion="Médico epidemiólogo y médico general. Atención médica domiciliaria y videoconsultas en la zona norte de Anzoátegui. Más de 30 años de experiencia y más de 100.000 pacientes atendidos. Lunes a viernes 24 horas."
+  titulo="Médico a domicilio en Lechería y Anzoátegui | Dr. Juan G. Orellana A."
+  descripcion="Médico general y epidemiólogo a domicilio en Lechería, Barcelona, Puerto La Cruz y Guanta. Consultas en casa, récipes y constancias el mismo día. Lunes a viernes 24 horas. Llame al +58 414 823 7097."
+  ruta="/"
+  esquemaExtra={esquemaExtra}
 >
   <Header />
   <main>
     <Hero />
     <Servicios />
+    <Preguntas />
     <Contacto />
   </main>
   <Footer />

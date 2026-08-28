@@ -1,5 +1,6 @@
 ---
-import { contacto, cobertura, mapaEmbed } from '../data/site';
+import { contacto, mapaEmbed } from '../data/site';
+import { ciudades } from '../data/ciudades';
 import Iconos from './Iconos.astro';
 ---
 
@@ -74,9 +75,15 @@ import Iconos from './Iconos.astro';
         <p class="etiqueta text-azul-300">Zona de cobertura</p>
         <ul class="mt-5 flex flex-wrap gap-2">
           {
-            cobertura.map((ciudad) => (
-              <li class="dato rounded-full border border-white/20 px-4 py-2 text-[13px] text-white/85">
-                {ciudad}
+            ciudades.map((ciudad) => (
+              <li>
+                <a
+                  href={`/medico-a-domicilio/${ciudad.slug}/`}
+                  class="dato block rounded-full border border-white/20 px-4 py-2 text-[13px] text-white/85 transition-colors hover:border-white/60 hover:bg-white/10 hover:text-white"
+                  title={`Médico a domicilio en ${ciudad.nombre}`}
+                >
+                  {ciudad.nombre}
+                </a>
               </li>
             ))
           }

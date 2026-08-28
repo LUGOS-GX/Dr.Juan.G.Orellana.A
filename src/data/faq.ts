@@ -7,7 +7,7 @@ export const preguntas = [
   {
     pregunta: '¿Cómo solicito una consulta médica a domicilio?',
     respuesta:
-      'Llamando al +58 414 823 7097 o escribiendo por WhatsApp al mismo número. Coordinamos la dirección y un rango de hora aproximado para la visita.'
+      'Llamando o escribiendo al número publicado en esta página. Coordinamos la dirección y un rango de hora aproximado para la visita.'
   },
   {
     pregunta: '¿Atiende de noche o los fines de semana?',
@@ -17,7 +17,7 @@ export const preguntas = [
   {
     pregunta: '¿Entrega récipes, constancias y reposos médicos?',
     respuesta:
-      'Sí. Entrego récipes, indicaciones, constancias y reposos firmados y sellados el mismo día de la consulta, con CM 5180 y MPPS 60409.'
+      'Sí. Entrego récipes, indicaciones, constancias y reposos firmados y sellados el mismo día de la consulta.'
   },
   {
     pregunta: '¿Puede indicar exámenes de laboratorio o imagenología?',

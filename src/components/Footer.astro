@@ -1,5 +1,6 @@
 ---
 import { doctor, horarios, desarrollador, contacto } from '../data/site';
+import { ciudades } from '../data/ciudades';
 import Iconos from './Iconos.astro';
 
 const anio = new Date().getFullYear();
@@ -52,7 +53,25 @@ const anio = new Date().getFullYear();
       </div>
     </div>
 
-    <div class="mt-12 flex flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
+    <div class="mt-12 border-t border-white/10 pt-7">
+      <p class="etiqueta text-white/40">Zonas de atención</p>
+      <ul class="mt-4 flex flex-wrap gap-x-7 gap-y-2.5">
+        {
+          ciudades.map((ciudad) => (
+            <li>
+              <a
+                href={`/medico-a-domicilio/${ciudad.slug}/`}
+                class="text-sm text-white/60 transition-colors hover:text-white"
+              >
+                Médico a domicilio en {ciudad.nombre}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="mt-8 flex flex-col gap-4 border-t border-white/10 pt-7 sm:flex-row sm:items-center sm:justify-between">
       <p class="etiqueta text-white/35">© {anio} {doctor.nombre}</p>
       <a
         href={desarrollador.linkedin}

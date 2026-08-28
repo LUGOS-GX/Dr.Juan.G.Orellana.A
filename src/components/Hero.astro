@@ -1,5 +1,5 @@
 ---
-import { doctor, contacto, cobertura } from '../data/site';
+import { doctor, contacto } from '../data/site';
 import Iconos from './Iconos.astro';
 
 const indicadores = [
@@ -26,9 +26,6 @@ const indicadores = [
           style="--retardo:80ms"
         >
           Dr. Juan G.<br />Orellana A.
-          <span class="mt-5 block text-[clamp(1.05rem,3.4vw,1.7rem)] font-medium leading-snug text-azul-100">
-            Médico a domicilio en Lechería, Barcelona, Puerto La Cruz y Guanta
-          </span>
         </h1>
 
         <p
@@ -53,21 +50,6 @@ const indicadores = [
           Atención médica domiciliaria en la zona norte de Anzoátegui y videoconsultas.
           Más de 30 años de experiencia y más de 100.000 pacientes atendidos.
         </p>
-
-        <ul class="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm text-azul-100" data-revelar style="--retardo:280ms">
-          {
-            cobertura.map((ciudad, i) => (
-              <li>
-                <a
-                  href={`/medico-a-domicilio/${['lecheria', 'barcelona', 'puerto-la-cruz', 'guanta'][i]}/`}
-                  class="underline underline-offset-4 transition-colors hover:text-white"
-                >
-                  Médico a domicilio en {ciudad}
-                </a>
-              </li>
-            ))
-          }
-        </ul>
 
         <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center" data-revelar style="--retardo:320ms">
           <a
